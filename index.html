@@ -1,32 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>beat brother game</title>
 <style>
-body{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif}
-button{font-size:24px;padding:20px 40px}
-#hp{font-size:22px;margin:20px}
+body{font-family:Arial;text-align:center;margin-top:100px}
+button{font-size:20px;padding:20px 40px}
 </style>
 </head>
-
 <body>
-<h2>暴打哥哥游戏</h2>
-<div id="hp">哥哥血量：100</div>
+
+<h1>暴打哥哥游戏</h1>
+
+<p>哥哥血量：<span id="hp">50</span></p>
+
 <button onclick="hit()">打哥哥</button>
 
+<p id="log"></p>
+
 <script>
-let hp = 100;
+let hp = 50;
 
 function hit(){
-  hp -= Math.floor(Math.random()*15+5);
-  if(hp < 0) hp = 0;
-  document.getElementById("hp").innerText = "哥哥血量：" + hp;
-  if(hp === 0){
-    alert("哥哥被打倒了");
-    hp = 100;
-  }
+    let dmg = Math.floor(Math.random()*6)+1;
+
+    // 20%暴击
+    if(Math.random()<0.2){
+        dmg *= 2;
+        document.getElementById("log").innerText = "暴击！"
+    } else {
+        document.getElementById("log").innerText = ""
+    }
+
+    hp -= dmg;
+
+    // 哥哥反击
+    let counter = Math.floor(Math.random()*4)+1;
+    alert("哥哥反击你 " + counter + " 点爱意（伤害）");
+
+    document.getElementById("hp").innerText = hp;
+
+    if(hp <= 0){
+        document.body.innerHTML = "<h1>你赢了，哥哥倒下了</h1>";
+    }
 }
 </script>
+
 </body>
 </html>
