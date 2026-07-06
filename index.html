@@ -16,6 +16,7 @@ button{
   padding: 20px 40px;
 }
 </style>
+
 </head>
 
 <body>
@@ -32,31 +33,22 @@ button{
 let hp = 50;
 
 function hit() {
-  // 💥暴击概率
-  let damage = Math.random() < 0.3 ? 3 : 1;
+  let damage = 1;
+
+  // 随机暴击
+  if (Math.random() < 0.3) {
+    damage = 5;
+  }
 
   hp -= damage;
 
   document.getElementById("hp").innerText = hp;
 
-  // 🩸血量颜色变化
-  if (hp <= 20) {
-    document.getElementById("hp").style.color = "red";
-  } else if (hp <= 35) {
-    document.getElementById("hp").style.color = "orange";
-  }
-
-  // 😈哥哥反击（随机）
-  if (Math.random() < 0.4 && hp > 0) {
-    hp -= 1;
-    document.getElementById("log").innerText = "哥哥反击了！你也掉血了";
-  } else if (hp <= 0) {
+  if (hp <= 0) {
     document.getElementById("log").innerText = "哥哥被打倒了";
   } else {
     document.getElementById("log").innerText = "你打了哥哥一下（-" + damage + "）";
   }
-
-  document.getElementById("hp").innerText = hp;
 }
 </script>
 
