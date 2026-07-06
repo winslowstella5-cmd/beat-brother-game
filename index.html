@@ -3,11 +3,21 @@
 <head>
 <meta charset="utf-8">
 <title>beat brother game</title>
+
 <style>
-body{font-family:Arial;text-align:center;margin-top:100px}
-button{font-size:20px;padding:20px 40px}
+body{
+  font-family: Arial;
+  text-align: center;
+  margin-top: 100px;
+}
+
+button{
+  font-size: 20px;
+  padding: 20px 40px;
+}
 </style>
 </head>
+
 <body>
 
 <h1>暴打哥哥游戏</h1>
@@ -21,28 +31,16 @@ button{font-size:20px;padding:20px 40px}
 <script>
 let hp = 50;
 
-function hit(){
-    let dmg = Math.floor(Math.random()*6)+1;
+function hit() {
+  hp -= 1;
 
-    // 20%暴击
-    if(Math.random()<0.2){
-        dmg *= 2;
-        document.getElementById("log").innerText = "暴击！"
-    } else {
-        document.getElementById("log").innerText = ""
-    }
+  document.getElementById("hp").innerText = hp;
 
-    hp -= dmg;
-
-    // 哥哥反击
-    let counter = Math.floor(Math.random()*4)+1;
-    alert("哥哥反击你 " + counter + " 点爱意（伤害）");
-
-    document.getElementById("hp").innerText = hp;
-
-    if(hp <= 0){
-        document.body.innerHTML = "<h1>你赢了，哥哥倒下了</h1>";
-    }
+  if (hp <= 0) {
+    document.getElementById("log").innerText = "哥哥被打倒了";
+  } else {
+    document.getElementById("log").innerText = "你打了一下哥哥";
+  }
 }
 </script>
 
