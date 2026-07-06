@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>beat brother game</title>
+<style>
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif}
+button{font-size:24px;padding:20px 40px}
+#hp{font-size:22px;margin:20px}
+</style>
+</head>
+
+<body>
+<h2>暴打哥哥游戏</h2>
+<div id="hp">哥哥血量：100</div>
+<button onclick="hit()">打哥哥</button>
+
+<script>
+let hp = 100;
+
+function hit(){
+  hp -= Math.floor(Math.random()*15+5);
+  if(hp < 0) hp = 0;
+  document.getElementById("hp").innerText = "哥哥血量：" + hp;
+  if(hp === 0){
+    alert("哥哥被打倒了");
+    hp = 100;
+  }
+}
+</script>
+</body>
+</html>
