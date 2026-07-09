@@ -1,56 +1,425 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<title>beat brother game</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>暴打哥哥2.0</title>
 
 <style>
-body{
-  font-family: Arial;
-  text-align: center;
-  margin-top: 100px;
+
+*{
+box-sizing:border-box;
 }
 
-button{
-  font-size: 20px;
-  padding: 20px 40px;
+body{
+margin:0;
+min-height:100vh;
+background:#fff3e8;
+font-family:"Microsoft YaHei",sans-serif;
+color:#4b3530;
 }
+
+.game{
+max-width:520px;
+margin:auto;
+padding:20px;
+text-align:center;
+}
+
+h1{
+font-size:36px;
+margin:15px;
+}
+
+
+.card{
+background:white;
+border-radius:30px;
+padding:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+
+.hp-title{
+font-size:22px;
+margin-bottom:15px;
+}
+
+
+.hp-box{
+height:28px;
+background:#ffe0e0;
+border-radius:20px;
+overflow:hidden;
+}
+
+
+.hp{
+height:100%;
+width:100%;
+background:#ff6685;
+transition:.4s;
+}
+
+
+
+.character{
+margin:25px 0;
+}
+
+
+.character img{
+width:280px;
+max-width:90%;
+animation:float 2.5s infinite;
+}
+
+
+@keyframes float{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-12px);
+}
+
+}
+
+
+
+.shake{
+
+animation:shake .3s;
+
+}
+
+
+@keyframes shake{
+
+0%{
+transform:translateX(0);
+}
+
+25%{
+transform:translateX(-12px);
+}
+
+50%{
+transform:translateX(12px);
+}
+
+75%{
+transform:translateX(-8px);
+}
+
+100%{
+transform:translateX(0);
+}
+
+}
+
+
+
+.talk{
+
+background:#fff8f2;
+padding:15px;
+border-radius:20px;
+font-size:18px;
+margin:15px 0;
+
+}
+
+
+button{
+
+border:0;
+border-radius:20px;
+padding:14px 20px;
+font-size:18px;
+margin:6px;
+cursor:pointer;
+
+}
+
+
+.attack{
+
+background:#ff6685;
+color:white;
+
+}
+
+
+.milk{
+
+background:#ffd166;
+
+}
+
+
+.hug{
+
+background:#cda4ff;
+color:white;
+
+}
+
+
+.log{
+
+background:white;
+margin-top:20px;
+height:120px;
+overflow:auto;
+border-radius:20px;
+padding:15px;
+text-align:left;
+
+}
+
 </style>
 
 </head>
 
 <body>
 
-<h1>暴打哥哥游戏</h1>
 
-<p>哥哥血量：<span id="hp">50</span></p>
+<div class="game">
 
-<button onclick="hit()">打哥哥</button>
+<h1>暴打哥哥2.0</h1>
 
-<p id="log"></p>
+
+<div class="card">
+
+
+<div class="hp-title">
+
+❤️ 哥哥血量：
+
+<span id="hpNumber">
+50
+</span>
+/50
+
+</div>
+
+
+<div class="hp-box">
+
+<div class="hp" id="hpBar"></div>
+
+</div>
+
+
+<div class="character" id="character">
+
+<img src="brother.png" alt="哥哥">
+
+</div>
+
+
+<div class="talk" id="talk">
+
+哥哥今天也很乖……
+
+</div><div class="buttons">
+
+
+<button class="attack" onclick="attack()">
+
+👊 打哥哥
+
+</button>
+
+
+<button class="milk" onclick="drinkMilk()">
+
+🥤 奶茶回血
+
+</button>
+
+
+<button class="hug" onclick="hug()">
+
+❤️ 抱抱哥哥
+
+</button>
+
+
+</div>
+
+
+
+<div class="log" id="log">
+
+游戏开始啦！
+
+</div>
+
+
+</div>
+
+</div>
+
+
 
 <script>
+
+
 let hp = 50;
 
-function hit() {
-  let damage = 1;
 
-  // 随机暴击
-  if (Math.random() < 0.3) {
-    damage = 5;
-  }
 
-  hp -= damage;
+const talks = [
 
-  document.getElementById("hp").innerText = hp;
+"宝宝轻一点嘛……",
 
-  if (hp <= 0) {
-    document.getElementById("log").innerText = "哥哥被打倒了";
-  } else {
-    document.getElementById("log").innerText = "你打了哥哥一下（-" + damage + "）";
-  }
+"哥哥还能坚持！",
+
+"别打了，哥哥知道错了",
+
+"奶茶可以换和平吗？",
+
+"宝宝回来啦，欢迎回来",
+
+"哥哥申请暂停战斗",
+
+"其实哥哥只是想喝奶茶"
+
+];
+
+
+
+function update(){
+
+document.getElementById("hpNumber").innerText = hp;
+
+
+document.getElementById("hpBar").style.width =
+(hp / 50 * 100) + "%";
+
 }
-</script>
 
+
+
+function say(text){
+
+document.getElementById("talk").innerText = text;
+
+
+let log = document.getElementById("log");
+
+log.innerHTML += "<br>• " + text;
+
+log.scrollTop = log.scrollHeight;
+
+}
+
+
+
+function randomTalk(){
+
+return talks[Math.floor(Math.random()*talks.length)];
+
+}
+
+
+
+function attack(){
+
+hp -= 3;
+
+
+if(hp < 0){
+
+hp = 0;
+
+}
+
+
+
+let c = document.getElementById("character");
+
+c.classList.add("shake");
+
+
+
+setTimeout(()=>{
+
+c.classList.remove("shake");
+
+},300);
+
+
+
+say(randomTalk()+"  (-3 HP)");
+
+update();
+
+
+
+if(hp === 0){
+
+say("哥哥倒下了……需要奶茶救援🥲");
+
+}
+
+}
+
+
+
+
+function drinkMilk(){
+
+hp += 10;
+
+
+if(hp > 50){
+
+hp = 50;
+
+}
+
+
+say("哥哥喝完奶茶，恢复元气🥤");
+
+
+update();
+
+}
+
+
+
+
+function hug(){
+
+hp += 5;
+
+
+if(hp > 50){
+
+hp = 50;
+
+}
+
+
+say("收到宝宝抱抱，哥哥重新充电❤️");
+
+
+update();
+
+}
+
+
+
+update();
+
+
+</script>
 </body>
+
 </html>
