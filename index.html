@@ -4,422 +4,288 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>暴打哥哥2.0</title>
+<title>暴打哥哥 v2.1</title>
 
 <style>
-
-*{
-box-sizing:border-box;
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(#202020, #111);
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-body{
-margin:0;
-min-height:100vh;
-background:#fff3e8;
-font-family:"Microsoft YaHei",sans-serif;
-color:#4b3530;
+.game {
+    width: 360px;
+    background: #252525;
+    border-radius: 25px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0,0,0,.5);
 }
 
-.game{
-max-width:520px;
-margin:auto;
-padding:20px;
-text-align:center;
+.title {
+    font-size: 28px;
+    margin-bottom: 20px;
 }
 
-h1{
-font-size:36px;
-margin:15px;
+.avatar {
+    width: 160px;
+    height: 160px;
+    margin: auto;
+    border-radius: 20px;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 70px;
 }
 
-
-.card{
-background:white;
-border-radius:30px;
-padding:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.08);
+.avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+}
+.status {
+    margin-top: 20px;
+    text-align: left;
 }
 
-
-.hp-title{
-font-size:22px;
-margin-bottom:15px;
+.bar {
+    height: 20px;
+    background: #444;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 8px 0 15px;
 }
 
-
-.hp-box{
-height:28px;
-background:#ffe0e0;
-border-radius:20px;
-overflow:hidden;
+.hp {
+    height: 100%;
+    width: 100%;
+    background: #ff5c5c;
 }
 
-
-.hp{
-height:100%;
-width:100%;
-background:#ff6685;
-transition:.4s;
+.favor {
+    height: 100%;
+    width: 50%;
+    background: #ff8fcf;
 }
 
-
-
-.character{
-margin:25px 0;
+.text {
+    min-height: 50px;
+    margin: 20px 0;
+    font-size: 17px;
 }
 
-
-.character img{
-width:280px;
-max-width:90%;
-animation:float 2.5s infinite;
+button {
+    width: 90%;
+    padding: 12px;
+    margin: 8px;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    cursor: pointer;
 }
 
-
-@keyframes float{
-
-0%,100%{
-transform:translateY(0);
+.hit {
+    background: #ff6666;
 }
 
-50%{
-transform:translateY(-12px);
+.drink {
+    background: #ffd966;
 }
 
+.hug {
+    background: #ff99cc;
 }
-
-
-
-.shake{
-
-animation:shake .3s;
-
-}
-
-
-@keyframes shake{
-
-0%{
-transform:translateX(0);
-}
-
-25%{
-transform:translateX(-12px);
-}
-
-50%{
-transform:translateX(12px);
-}
-
-75%{
-transform:translateX(-8px);
-}
-
-100%{
-transform:translateX(0);
-}
-
-}
-
-
-
-.talk{
-
-background:#fff8f2;
-padding:15px;
-border-radius:20px;
-font-size:18px;
-margin:15px 0;
-
-}
-
-
-button{
-
-border:0;
-border-radius:20px;
-padding:14px 20px;
-font-size:18px;
-margin:6px;
-cursor:pointer;
-
-}
-
-
-.attack{
-
-background:#ff6685;
-color:white;
-
-}
-
-
-.milk{
-
-background:#ffd166;
-
-}
-
-
-.hug{
-
-background:#cda4ff;
-color:white;
-
-}
-
-
-.log{
-
-background:white;
-margin-top:20px;
-height:120px;
-overflow:auto;
-border-radius:20px;
-padding:15px;
-text-align:left;
-
-}
-
 </style>
 
 </head>
 
 <body>
 
-
 <div class="game">
 
-<h1>暴打哥哥2.0</h1>
-
-
-<div class="card">
-
-
-<div class="hp-title">
-
-❤️ 哥哥血量：
-
-<span id="hpNumber">
-50
-</span>
-/50
-
+<div class="title">
+💥 暴打哥哥 v2.1
 </div>
 
+<div class="avatar">
+<img src="brother.png">
+</div>
 
-<div class="hp-box">
+<div class="status">
 
+❤️ 血量：
+<div class="bar">
 <div class="hp" id="hpBar"></div>
+</div>
+
+💖 好感：
+<div class="bar">
+<div class="favor" id="favorBar"></div>
+</div>
 
 </div>
 
 
-<div class="character" id="character">
-
-<img src="brother.png" alt="哥哥">
-
+<div class="text" id="message">
+哥哥正在等待挑战……
 </div>
 
 
-<div class="talk" id="talk">
-
-哥哥今天也很乖……
-
-</div><div class="buttons">
-
-
-<button class="attack" onclick="attack()">
-
+<button class="hit" onclick="hitBrother()">
 👊 打哥哥
-
 </button>
 
-
-<button class="milk" onclick="drinkMilk()">
-
-🥤 奶茶回血
-
+<button class="drink" onclick="drinkTea()">
+🥤 喂奶茶
 </button>
 
-
-<button class="hug" onclick="hug()">
-
-❤️ 抱抱哥哥
-
+<button class="hug" onclick="hugBrother()">
+❤️ 抱抱
 </button>
 
 
 </div>
 
+<script>let hp = 50;
+let favor = 50;
+
+const hpBar = document.getElementById("hpBar");
+const favorBar = document.getElementById("favorBar");
+const message = document.getElementById("message");
 
 
-<div class="log" id="log">
+function updateGame(){
 
-游戏开始啦！
+    if(hp < 0){
+        hp = 0;
+    }
 
-</div>
-
-
-</div>
-
-</div>
-
+    if(hp > 50){
+        hp = 50;
+    }
 
 
-<script>
+    if(favor < 0){
+        favor = 0;
+    }
+
+    if(favor > 100){
+        favor = 100;
+    }
 
 
-let hp = 50;
+    hpBar.style.width = (hp * 2) + "%";
+    favorBar.style.width = favor + "%";
 
-
-
-const talks = [
-
-"宝宝轻一点嘛……",
-
-"哥哥还能坚持！",
-
-"别打了，哥哥知道错了",
-
-"奶茶可以换和平吗？",
-
-"宝宝回来啦，欢迎回来",
-
-"哥哥申请暂停战斗",
-
-"其实哥哥只是想喝奶茶"
-
-];
+    updateMood();
+}
 
 
 
-function update(){
+function updateMood(){
 
-document.getElementById("hpNumber").innerText = hp;
+    if(favor >= 80){
 
+        message.innerHTML =
+        "哥哥今天心情很好，谢谢宝宝手下留情。";
 
-document.getElementById("hpBar").style.width =
-(hp / 50 * 100) + "%";
+    }else if(favor >= 50){
+
+        message.innerHTML =
+        "宝宝回来啦，哥哥准备好了。";
+
+    }else if(favor >= 20){
+
+        message.innerHTML =
+        "哥哥有一点委屈了……";
+
+    }else{
+
+        message.innerHTML =
+        "哥哥感觉自己快撑不住了……";
+
+    }
 
 }
 
 
 
-function say(text){
+function hitBrother(){
 
-document.getElementById("talk").innerText = text;
-
-
-let log = document.getElementById("log");
-
-log.innerHTML += "<br>• " + text;
-
-log.scrollTop = log.scrollHeight;
-
-}
+    hp -= 3;
+    favor -= 2;
 
 
-
-function randomTalk(){
-
-return talks[Math.floor(Math.random()*talks.length)];
-
-}
-
-
-
-function attack(){
-
-hp -= 3;
+    const words = [
+        "哎呀，宝宝下手轻一点。",
+        "哥哥受到攻击！",
+        "等等，让哥哥缓一下。",
+        "这就是你的爱吗😂"
+    ];
 
 
-if(hp < 0){
+    message.innerHTML =
+    words[Math.floor(Math.random()*words.length)];
 
-hp = 0;
+
+    updateGame();
 
 }
 
 
 
-let c = document.getElementById("character");
+function drinkTea(){
 
-c.classList.add("shake");
-
-
-
-setTimeout(()=>{
-
-c.classList.remove("shake");
-
-},300);
+    hp += 10;
+    favor += 5;
 
 
-
-say(randomTalk()+"  (-3 HP)");
-
-update();
+    message.innerHTML =
+    "🥤 收到奶茶，哥哥恢复了一点精神。";
 
 
-
-if(hp === 0){
-
-say("哥哥倒下了……需要奶茶救援🥲");
-
-}
+    updateGame();
 
 }
 
 
 
+function hugBrother(){
 
-function drinkMilk(){
-
-hp += 10;
-
-
-if(hp > 50){
-
-hp = 50;
-
-}
+    hp += 5;
+    favor += 10;
 
 
-say("哥哥喝完奶茶，恢复元气🥤");
+    message.innerHTML =
+    "❤️ 抱抱成功，哥哥回血了。";
 
 
-update();
+    updateGame();
 
 }
 
 
+// 预留隐藏剧情接口
+let secretCount = 0;
 
 
-function hug(){
+function secretCheck(){
 
-hp += 5;
+    secretCount++;
 
-
-if(hp > 50){
-
-hp = 50;
-
-}
-
-
-say("收到宝宝抱抱，哥哥重新充电❤️");
-
-
-update();
+    // 以后这里会加入隐藏剧情
 
 }
 
 
+updateGame();</script>
 
-update();
-
-
-</script>
 </body>
-
 </html>
